@@ -31,6 +31,11 @@ if test -e "$CONFIG_DIR/platformio_override.ini"; then
     cp "$CONFIG_DIR/platformio_override.ini" Tasmota/platformio_override.ini
 fi
 
+if test -e "$CONFIG_DIR/lib"; then
+    echo -e "Adding additional libraries.\n"
+    cp -r "$CONFIG_DIR/lib" Tasmota/
+fi
+
 cd Tasmota
 
 pio run
