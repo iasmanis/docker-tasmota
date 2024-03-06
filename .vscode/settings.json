@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "ratio": "cpp",
+        "bitset": "cpp",
+        "algorithm": "cpp"
+    }
+}
