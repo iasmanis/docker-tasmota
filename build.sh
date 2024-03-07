@@ -43,7 +43,12 @@ if ls $CONFIG_DIR/*.patch 1> /dev/null 2>&1; then
     ## Apply all *.patch files in CONFIG_DIR to Tasmota
     echo -e "Applying patches in $CONFIG_DIR to Tasmota.\n"
     for patch_file in $CONFIG_DIR/*.patch; do
-        $(cd Tasmota && git apply "../$patch_file")
+        ret=$(cd Tasmota && git apply "../$patch_file")
+        
+        if [ $? -ne 0 ]; then
+            echo -e "Failed to apply patch $patch_file\n"
+            exit 1
+        fi
     done
 fi
 
