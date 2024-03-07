@@ -36,6 +36,21 @@ if test -e "$CONFIG_DIR/lib"; then
     cp -r "$CONFIG_DIR/lib" Tasmota/
 fi
 
+if ls $CONFIG_DIR/*.patch 1> /dev/null 2>&1; then
+    repo_sha=$(cd Tasmota && git rev-parse HEAD)
+    echo "Current Tasmota repository SHA: $repo_sha"
+    
+    ## Apply all *.patch files in CONFIG_DIR to Tasmota
+    echo -e "Applying patches in $CONFIG_DIR to Tasmota.\n"
+    for patch_file in $CONFIG_DIR/*.patch; do
+        $(cd Tasmota && git apply "../$patch_file")
+    done
+fi
+
 cd Tasmota
 
 pio run
+
+if [ ! -z "$repo_sha" ]; then
+    git checkout -f "$repo_sha"
+fi
