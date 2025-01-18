@@ -18,6 +18,13 @@ CONFIG_DIR="configs/$CONFIG"
 
 cd $rundir
 
+if test -e "$CONFIG_DIR/tasmota-tag"; then
+    cd Tasmota
+    git fetch --all
+    git checkout $(cat "../$CONFIG_DIR/tasmota-tag")
+    cd $rundir
+fi
+
 ## Check script dir for custom user_config_override.h
 if test -e "$CONFIG_DIR/user_config_override.h"; then
     ## new Tasmota builds have this enabled as default
